@@ -1,0 +1,7 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Migration Application Model
+Bundle-SymbolicName: org.fipro.eclipse.migration.model
+Bundle-Version: 1.0.0.qualifier
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Export-Package: org.fipro.eclipse.migration.model
