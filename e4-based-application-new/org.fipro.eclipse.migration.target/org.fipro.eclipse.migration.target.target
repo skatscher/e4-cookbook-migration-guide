@@ -6,5 +6,9 @@
 			<unit id="org.eclipse.equinox.executable.feature.group" version="3.8.300.v20190213-1655"/>
 			<unit id="org.eclipse.jdt.feature.group" version="3.17.0.v20190307-0500"/>
 		</location>
+		<location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
+			<unit id="org.eclipse.e4.tools.spies.feature.feature.group" version="0.18.0.v20190227-1016"/>
+			<repository location="https://download.eclipse.org/e4/snapshots/org.eclipse.e4.tools/latest/"/>
+		</location>
 	</locations>
 </target>
