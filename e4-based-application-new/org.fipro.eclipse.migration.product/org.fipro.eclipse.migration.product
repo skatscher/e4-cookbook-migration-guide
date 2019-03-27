@@ -3,7 +3,6 @@
 
 <product name="Migration Tutorial" uid="org.fipro.eclipse.migration" id="org.fipro.eclipse.migration.ui.MigrationTutorial" application="org.fipro.eclipse.migration.ui.application" version="1.0.0" useFeatures="true" includeLaunchers="true">
 
-
    <configIni use="default">
    </configIni>
 
@@ -15,7 +14,6 @@
    <windowImages i16="/org.fipro.eclipse.migration.ui/icons/eclipse16.png" i32="/org.fipro.eclipse.migration.ui/icons/eclipse32.png"/>
 
    <launcher>
-      <solaris/>
       <win useIco="false">
          <bmp
             winSmallLow="/org.fipro.eclipse.migration.ui/icons/eclipse16.gif"
@@ -23,17 +21,18 @@
       </win>
    </launcher>
 
-
    <vm>
    </vm>
-
 
    <plugins>
    </plugins>
 
    <features>
       <feature id="org.fipro.eclipse.migration.feature" version="1.0.0.qualifier"/>
-      <feature id="org.eclipse.rcp" version="3.7.2.v20120120-1424-9DB5FmnFq5JCf1UA38R-kz0S0272"/>
+      <feature id="org.eclipse.rcp"/>
+      <feature id="org.eclipse.e4.rcp"/>
+      <feature id="org.eclipse.emf.common"/>
+      <feature id="org.eclipse.emf.ecore"/>
    </features>
 
    <configurations>
