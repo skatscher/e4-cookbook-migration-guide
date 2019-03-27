@@ -3,8 +3,11 @@ package org.fipro.eclipse.migration.ui.view.overview;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
+import javax.annotation.PostConstruct;
+
 import org.eclipse.core.databinding.observable.IObservable;
 import org.eclipse.core.databinding.observable.list.WritableList;
+import org.eclipse.e4.ui.di.Focus;
 import org.eclipse.jface.databinding.viewers.ObservableListContentProvider;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.viewers.DoubleClickEvent;
@@ -16,6 +19,7 @@ import org.eclipse.jface.viewers.TableViewerColumn;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.part.ViewPart;
 import org.fipro.eclipse.migration.model.Person;
@@ -23,12 +27,12 @@ import org.fipro.eclipse.migration.service.PersonServiceImpl;
 import org.fipro.eclipse.migration.ui.editor.PersonEditor;
 import org.fipro.eclipse.migration.ui.editor.PersonEditorInput;
 
-public class OverviewView extends ViewPart {
+public class OverviewView {
 
 	TableViewer viewer;
 	
-	@Override
-	public void createPartControl(Composite parent) {
+	@PostConstruct
+	public void createPartControl(Composite parent, final IWorkbenchPage workbenchPage) {
 		parent.setLayout(new GridLayout());
 		
 		IObservable list = new WritableList(PersonServiceImpl.getPersons(10), Person.class);
@@ -89,7 +93,7 @@ public class OverviewView extends ViewPart {
 						});
 						PersonEditorInput input = new PersonEditorInput(person);
 				        try {
-				        	getSite().getWorkbenchWindow().getActivePage().openEditor(input, PersonEditor.ID);
+				        	workbenchPage.openEditor(input, PersonEditor.ID);
 
 				        } catch (PartInitException e) {
 				        	throw new RuntimeException(e);
@@ -100,7 +104,7 @@ public class OverviewView extends ViewPart {
 		});
 	}
 
-	@Override
+	@Focus
 	public void setFocus() {
 		this.viewer.getControl().setFocus();
 	}

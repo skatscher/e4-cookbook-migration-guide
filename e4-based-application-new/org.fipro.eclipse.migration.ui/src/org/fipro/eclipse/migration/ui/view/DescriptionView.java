@@ -1,6 +1,10 @@
 package org.fipro.eclipse.migration.ui.view;
 
+import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
+
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.e4.ui.di.Focus;
 import org.eclipse.jface.util.IPropertyChangeListener;
 import org.eclipse.jface.util.PropertyChangeEvent;
 import org.eclipse.jface.viewers.ISelection;
@@ -20,7 +24,7 @@ import org.fipro.eclipse.migration.model.Person.Gender;
 import org.fipro.eclipse.migration.ui.Activator;
 import org.fipro.eclipse.migration.ui.view.overview.OverviewView;
 
-public class DescriptionView extends ViewPart {
+public class DescriptionView {
 
 	Text description;
 	
@@ -45,7 +49,7 @@ public class DescriptionView extends ViewPart {
 		}
 	};
 	
-	@Override
+	@PostConstruct
 	public void createPartControl(Composite parent) {
 		parent.setLayout(new FillLayout());
 		description = new Text(parent, SWT.MULTI | SWT.WRAP | SWT.READ_ONLY);
@@ -78,16 +82,14 @@ public class DescriptionView extends ViewPart {
 		getSite().getWorkbenchWindow().getSelectionService().addSelectionListener(selectionListener);
 	}
 
-	@Override
+	@Focus
 	public void setFocus() {
 	}
 
-	@Override
+	@PreDestroy
 	public void dispose() {
 		// on disposal remove the selection listener
 		ISelectionService s = getSite().getWorkbenchWindow().getSelectionService();
 		s.removeSelectionListener(selectionListener);
-		
-		super.dispose();
 	}
 }

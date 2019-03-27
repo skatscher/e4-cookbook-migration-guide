@@ -22,13 +22,13 @@
    </extension>
    <extension
          point="org.eclipse.ui.views">
-      <view
+      <e4view
             class="org.fipro.eclipse.migration.ui.view.overview.OverviewView"
             icon="icons/prop_ps.gif"
             id="org.fipro.eclipse.migration.ui.overview"
             name="Overview"
             restorable="true">
-      </view>
+      </e4view>
       <view
             class="org.fipro.eclipse.migration.ui.view.DetailView"
             icon="icons/editor.gif"
@@ -36,13 +36,13 @@
             name="Details"
             restorable="true">
       </view>
-      <view
+      <e4view
             class="org.fipro.eclipse.migration.ui.view.DescriptionView"
             icon="icons/environment_obj.gif"
             id="org.fipro.eclipse.migration.ui.descview"
             name="Description"
             restorable="true">
-      </view>
+      </e4view>
    </extension>
    <extension
          point="org.eclipse.ui.perspectiveExtensions">
