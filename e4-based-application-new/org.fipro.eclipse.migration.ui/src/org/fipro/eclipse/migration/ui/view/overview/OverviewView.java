@@ -4,16 +4,20 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
 import javax.annotation.PostConstruct;
+import javax.inject.Inject;
 
 import org.eclipse.core.databinding.observable.IObservable;
 import org.eclipse.core.databinding.observable.list.WritableList;
 import org.eclipse.e4.ui.di.Focus;
+import org.eclipse.e4.ui.workbench.modeling.ESelectionService;
 import org.eclipse.jface.databinding.viewers.ObservableListContentProvider;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.viewers.DoubleClickEvent;
 import org.eclipse.jface.viewers.IDoubleClickListener;
 import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TableViewerColumn;
 import org.eclipse.swt.SWT;
@@ -21,13 +25,15 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PartInitException;
-import org.eclipse.ui.part.ViewPart;
 import org.fipro.eclipse.migration.model.Person;
 import org.fipro.eclipse.migration.service.PersonServiceImpl;
 import org.fipro.eclipse.migration.ui.editor.PersonEditor;
 import org.fipro.eclipse.migration.ui.editor.PersonEditorInput;
 
 public class OverviewView {
+
+	@Inject
+	private ESelectionService selectionService;
 
 	TableViewer viewer;
 	
@@ -70,8 +76,14 @@ public class OverviewView {
 		
 		viewer.setInput(list);
 		
-		// set the viewer as selection provider
-		getSite().setSelectionProvider(viewer);
+		viewer.addSelectionChangedListener(new ISelectionChangedListener() {
+			@Override
+			public void selectionChanged(SelectionChangedEvent event) {
+				IStructuredSelection selection = event.getStructuredSelection();
+				Person person = (Person)selection.getFirstElement();
+				selectionService.setSelection(person);
+			}
+		});
 		
 		// hook double click for opening an editor
 		viewer.addDoubleClickListener(new IDoubleClickListener() {

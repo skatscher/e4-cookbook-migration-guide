@@ -1,54 +1,29 @@
 package org.fipro.eclipse.migration.ui.view;
 
 import javax.annotation.PostConstruct;
-import javax.annotation.PreDestroy;
+import javax.inject.Inject;
+import javax.inject.Named;
 
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.e4.core.di.annotations.Optional;
 import org.eclipse.e4.ui.di.Focus;
+import org.eclipse.e4.ui.services.IServiceConstants;
 import org.eclipse.jface.util.IPropertyChangeListener;
 import org.eclipse.jface.util.PropertyChangeEvent;
-import org.eclipse.jface.viewers.ISelection;
-import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Text;
-import org.eclipse.ui.ISelectionListener;
-import org.eclipse.ui.ISelectionService;
-import org.eclipse.ui.IWorkbenchPart;
-import org.eclipse.ui.part.ViewPart;
 import org.fipro.eclipse.migration.model.Person;
 import org.fipro.eclipse.migration.model.Person.Gender;
 import org.fipro.eclipse.migration.ui.Activator;
-import org.fipro.eclipse.migration.ui.view.overview.OverviewView;
 
 public class DescriptionView {
 
 	Text description;
-	
-	ISelectionListener selectionListener = new ISelectionListener() {
-		
-		@Override
-		public void selectionChanged(IWorkbenchPart part, ISelection selection) {
-			if (part instanceof OverviewView 
-					&& selection instanceof IStructuredSelection) {
-				
-				if (!selection.isEmpty()) {
-					Object selected = ((IStructuredSelection) selection).getFirstElement();
-					Person p = (Person) selected;
-					description.setText(p.getFirstName() + " " + p.getLastName() 
-							+ " is a " + (p.isMarried() ? "married " : "single ")
-							+ (Gender.MALE.equals(p.getGender()) ? "man" : "woman"));
-				}
-				else {
-					description.setText("");
-				}
-			}
-		}
-	};
-	
+
 	@PostConstruct
 	public void createPartControl(Composite parent) {
 		parent.setLayout(new FillLayout());
@@ -78,18 +53,22 @@ public class DescriptionView {
 						}
 					}
 				});
-		
-		getSite().getWorkbenchWindow().getSelectionService().addSelectionListener(selectionListener);
+	}
+
+	@Inject
+	protected void updateDescription(@Optional @Named(IServiceConstants.ACTIVE_SELECTION) Person person) {
+		if (description != null && !description.isDisposed()) {
+			if (person != null) {
+				description.setText(person.getFirstName() + " " + person.getLastName() 
+				+ " is a " + (person.isMarried() ? "married " : "single ")
+				+ (Gender.MALE.equals(person.getGender()) ? "man" : "woman"));
+			} else {
+				description.setText("");
+			}
+		}
 	}
 
 	@Focus
 	public void setFocus() {
-	}
-
-	@PreDestroy
-	public void dispose() {
-		// on disposal remove the selection listener
-		ISelectionService s = getSite().getWorkbenchWindow().getSelectionService();
-		s.removeSelectionListener(selectionListener);
 	}
 }
