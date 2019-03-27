@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?eclipse version="3.4"?>
 <plugin>
 
    <extension
@@ -155,6 +154,13 @@
             id="org.fipro.eclipse.migration.ui.page1"
             name="Description">
       </page>
+   </extension>
+   <extension
+         id="org.fipro.eclipse.migration.ui.fragment"
+         point="org.eclipse.e4.workbench.model">
+      <fragment
+            uri="fragment.e4xmi">
+      </fragment>
    </extension>
 
 </plugin>
