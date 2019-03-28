@@ -2,6 +2,7 @@
 <fragment:ModelFragments xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:commands="http://www.eclipse.org/ui/2010/UIModel/application/commands" xmlns:fragment="http://www.eclipse.org/ui/2010/UIModel/fragment" xmlns:menu="http://www.eclipse.org/ui/2010/UIModel/application/ui/menu" xmi:id="_GwrKcFDcEemGVtyrOt0jCw">
   <fragments xsi:type="fragment:StringModelFragment" xmi:id="_C6kZUFGREemNHP2hjG1rxQ" featurename="commands" parentElementId="org.eclipse.e4.legacy.ide.application">
     <elements xsi:type="commands:Command" xmi:id="_NzSPUFGREemNHP2hjG1rxQ" elementId="org.fipro.eclipse.migration.ui.command.openDialog" commandName="Open Dialog"/>
+    <elements xsi:type="commands:Command" xmi:id="_0iTrkFGWEemNHP2hjG1rxQ" elementId="org.eclipse.ui.window.preferences" commandName="Preferences"/>
   </fragments>
   <fragments xsi:type="fragment:StringModelFragment" xmi:id="_ZCf5wFGREemNHP2hjG1rxQ" featurename="handlers" parentElementId="org.eclipse.e4.legacy.ide.application">
     <elements xsi:type="commands:Handler" xmi:id="_b4fPcFGREemNHP2hjG1rxQ" elementId="org.fipro.eclipse.migration.ui.handler.openDialog" contributionURI="bundleclass://org.fipro.eclipse.migration.ui/org.fipro.eclipse.migration.ui.handler.OpenDialogHandler" command="_NzSPUFGREemNHP2hjG1rxQ"/>
@@ -10,6 +11,7 @@
     <elements xsi:type="menu:MenuContribution" xmi:id="_mGj7EFGTEemNHP2hjG1rxQ" elementId="org.fipro.eclipse.migration.ui.menucontribution.0" parentId="org.eclipse.ui.main.menu">
       <children xsi:type="menu:Menu" xmi:id="_xk6NsFGTEemNHP2hjG1rxQ" elementId="org.fipro.eclipse.migration.ui.commandMenu" label="Commands">
         <children xsi:type="menu:HandledMenuItem" xmi:id="_4mMfIFGTEemNHP2hjG1rxQ" elementId="org.fipro.eclipse.migration.ui.item.command.openDialog" label="Open Dialog" command="_NzSPUFGREemNHP2hjG1rxQ"/>
+        <children xsi:type="menu:HandledMenuItem" xmi:id="_PHT0QFGXEemNHP2hjG1rxQ" elementId="org.fipro.eclipse.migration.ui.handledmenuitem.preferences" label="Preferences" command="_0iTrkFGWEemNHP2hjG1rxQ"/>
       </children>
     </elements>
   </fragments>

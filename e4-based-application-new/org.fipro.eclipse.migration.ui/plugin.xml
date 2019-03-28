@@ -79,21 +79,6 @@
       </product>
    </extension>
    <extension
-         point="org.eclipse.ui.menus">
-      <menuContribution
-            allPopups="false"
-            locationURI="menu:org.eclipse.ui.main.menu">
-         <menu
-               label="Commands">
-            <command
-                  commandId="org.eclipse.ui.window.preferences"
-                  label="Preferences"
-                  style="push">
-            </command>
-         </menu>
-      </menuContribution>
-   </extension>
-   <extension
          point="org.eclipse.ui.editors">
       <editor
             class="org.fipro.eclipse.migration.ui.editor.PersonEditor"
