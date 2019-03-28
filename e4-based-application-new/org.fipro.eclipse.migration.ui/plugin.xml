@@ -60,9 +60,6 @@
                relationship="bottom"
                relative="org.fipro.eclipse.migration.ui.overview">
          </view>
-         <actionSet
-               id="org.fipro.eclipse.migration.ui.fileActionSet">
-         </actionSet>
       </perspectiveExtension>
    </extension>
    <extension
@@ -95,28 +92,6 @@
             </command>
          </menu>
       </menuContribution>
-   </extension>
-   <extension
-         point="org.eclipse.ui.actionSets">
-      <actionSet
-            id="org.fipro.eclipse.migration.ui.fileActionSet"
-            label="Actions">
-         <menu
-               id="org.fipro.eclipse.migration.ui.file"
-               label="Actions"
-               path="file">
-            <separator
-                  name="slot1">
-            </separator>
-         </menu>
-         <action
-               class="org.fipro.eclipse.migration.ui.action.OpenDialogAction"
-               id="org.fipro.eclipse.migration.ui.dialogAction"
-               label="Open Dialog Action"
-               menubarPath="org.fipro.eclipse.migration.ui.file/slot1"
-               style="push">
-         </action>
-      </actionSet>
    </extension>
    <extension
          point="org.eclipse.ui.editors">
