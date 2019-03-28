@@ -89,11 +89,6 @@
          <menu
                label="Commands">
             <command
-                  commandId="org.fipro.eclipse.migration.ui.dialogCommand"
-                  label="Dialog öffnen"
-                  style="push">
-            </command>
-            <command
                   commandId="org.eclipse.ui.window.preferences"
                   label="Preferences"
                   style="push">
@@ -122,20 +117,6 @@
                style="push">
          </action>
       </actionSet>
-   </extension>
-   <extension
-         point="org.eclipse.ui.commands">
-      <command
-            id="org.fipro.eclipse.migration.ui.dialogCommand"
-            name="Open Dialog Command">
-      </command>
-   </extension>
-   <extension
-         point="org.eclipse.ui.handlers">
-      <handler
-            class="org.fipro.eclipse.migration.ui.handler.OpenDialogHandler"
-            commandId="org.fipro.eclipse.migration.ui.dialogCommand">
-      </handler>
    </extension>
    <extension
          point="org.eclipse.ui.editors">
