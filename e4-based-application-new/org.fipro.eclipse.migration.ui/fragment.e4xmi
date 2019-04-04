@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ASCII"?>
-<fragment:ModelFragments xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:commands="http://www.eclipse.org/ui/2010/UIModel/application/commands" xmlns:fragment="http://www.eclipse.org/ui/2010/UIModel/fragment" xmlns:menu="http://www.eclipse.org/ui/2010/UIModel/application/ui/menu" xmi:id="_GwrKcFDcEemGVtyrOt0jCw">
+<fragment:ModelFragments xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:advanced="http://www.eclipse.org/ui/2010/UIModel/application/ui/advanced" xmlns:basic="http://www.eclipse.org/ui/2010/UIModel/application/ui/basic" xmlns:commands="http://www.eclipse.org/ui/2010/UIModel/application/commands" xmlns:fragment="http://www.eclipse.org/ui/2010/UIModel/fragment" xmlns:menu="http://www.eclipse.org/ui/2010/UIModel/application/ui/menu" xmi:id="_GwrKcFDcEemGVtyrOt0jCw">
   <fragments xsi:type="fragment:StringModelFragment" xmi:id="_C6kZUFGREemNHP2hjG1rxQ" featurename="commands" parentElementId="org.eclipse.e4.legacy.ide.application">
     <elements xsi:type="commands:Command" xmi:id="_NzSPUFGREemNHP2hjG1rxQ" elementId="org.fipro.eclipse.migration.ui.command.openDialog" commandName="Open Dialog"/>
     <elements xsi:type="commands:Command" xmi:id="_0iTrkFGWEemNHP2hjG1rxQ" elementId="org.eclipse.ui.window.preferences" commandName="Preferences"/>
@@ -12,6 +12,25 @@
       <children xsi:type="menu:Menu" xmi:id="_xk6NsFGTEemNHP2hjG1rxQ" elementId="org.fipro.eclipse.migration.ui.commandMenu" label="Commands">
         <children xsi:type="menu:HandledMenuItem" xmi:id="_4mMfIFGTEemNHP2hjG1rxQ" elementId="org.fipro.eclipse.migration.ui.item.command.openDialog" label="Open Dialog" command="_NzSPUFGREemNHP2hjG1rxQ"/>
         <children xsi:type="menu:HandledMenuItem" xmi:id="_PHT0QFGXEemNHP2hjG1rxQ" elementId="org.fipro.eclipse.migration.ui.handledmenuitem.preferences" label="Preferences" command="_0iTrkFGWEemNHP2hjG1rxQ"/>
+      </children>
+    </elements>
+  </fragments>
+  <fragments xsi:type="fragment:StringModelFragment" xmi:id="_zdhU4FcUEemIPNdqcal8bg" featurename="snippets" parentElementId="org.eclipse.e4.legacy.ide.application">
+    <elements xsi:type="advanced:Perspective" xmi:id="_4WaWcFcUEemIPNdqcal8bg" elementId="org.fipro.eclipse.migration.ui.perspective" label="RCP Perspective" iconURI="platform:/plugin/org.fipro.eclipse.migration.ui/icons/eclipse16.png">
+      <children xsi:type="basic:PartSashContainer" xmi:id="_SwjS8FcVEemIPNdqcal8bg" elementId="org.fipro.eclipse.migration.ui.partsashcontainer.0" horizontal="true">
+        <children xsi:type="basic:PartSashContainer" xmi:id="_VNeoYFcVEemIPNdqcal8bg" elementId="org.fipro.eclipse.migration.ui.partsashcontainer.1">
+          <children xsi:type="basic:PartStack" xmi:id="_b7uCAFcVEemIPNdqcal8bg" elementId="org.fipro.eclipse.migration.ui.partstack.0" containerData="75">
+            <children xsi:type="basic:Part" xmi:id="_c4l58FcVEemIPNdqcal8bg" elementId="org.fipro.eclipse.migration.ui.overview" contributionURI="bundleclass://org.fipro.eclipse.migration.ui/org.fipro.eclipse.migration.ui.view.overview.OverviewView" label="Overview" iconURI="platform:/plugin/org.fipro.eclipse.migration.ui/icons/prop_ps.gif"/>
+          </children>
+          <children xsi:type="basic:PartStack" xmi:id="_cU-2kFcVEemIPNdqcal8bg" elementId="org.fipro.eclipse.migration.ui.partstack.1" containerData="25">
+            <children xsi:type="basic:Part" xmi:id="_duOhcFcVEemIPNdqcal8bg" elementId="org.fipro.eclipse.migration.ui.descview" containerData="" contributionURI="bundleclass://org.fipro.eclipse.migration.ui/org.fipro.eclipse.migration.ui.view.DescriptionView" label="Description" iconURI="platform:/plugin/org.fipro.eclipse.migration.ui/icons/environment_obj.gif"/>
+          </children>
+        </children>
+        <children xsi:type="basic:PartSashContainer" xmi:id="_YWiEAFcVEemIPNdqcal8bg" elementId="org.fipro.eclipse.migration.ui.partsashcontainer.2">
+          <children xsi:type="basic:PartStack" xmi:id="_Y7LpMFcVEemIPNdqcal8bg" elementId="org.eclipse.ui.editorss">
+            <tags>NoAutoCollapse</tags>
+          </children>
+        </children>
       </children>
     </elements>
   </fragments>

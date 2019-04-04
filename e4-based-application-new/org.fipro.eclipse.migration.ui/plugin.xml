@@ -11,58 +11,6 @@
       </application>
    </extension>
    <extension
-         point="org.eclipse.ui.perspectives">
-      <perspective
-            class="org.fipro.eclipse.migration.ui.Perspective"
-            icon="icons/eclipse16.png"
-            id="org.fipro.eclipse.migration.ui.perspective"
-            name="RCP Perspective">
-      </perspective>
-   </extension>
-   <extension
-         point="org.eclipse.ui.views">
-      <e4view
-            class="org.fipro.eclipse.migration.ui.view.overview.OverviewView"
-            icon="icons/prop_ps.gif"
-            id="org.fipro.eclipse.migration.ui.overview"
-            name="Overview"
-            restorable="true">
-      </e4view>
-      <view
-            class="org.fipro.eclipse.migration.ui.view.DetailView"
-            icon="icons/editor.gif"
-            id="org.fipro.eclipse.migration.ui.detailview"
-            name="Details"
-            restorable="true">
-      </view>
-      <e4view
-            class="org.fipro.eclipse.migration.ui.view.DescriptionView"
-            icon="icons/environment_obj.gif"
-            id="org.fipro.eclipse.migration.ui.descview"
-            name="Description"
-            restorable="true">
-      </e4view>
-   </extension>
-   <extension
-         point="org.eclipse.ui.perspectiveExtensions">
-      <perspectiveExtension
-            targetID="*">
-         <view
-               id="org.fipro.eclipse.migration.ui.overview"
-               minimized="false"
-               relationship="left"
-               relative="org.eclipse.ui.editorss">
-         </view>
-         <view
-               id="org.fipro.eclipse.migration.ui.descview"
-               minimized="false"
-               ratio="0.75"
-               relationship="bottom"
-               relative="org.fipro.eclipse.migration.ui.overview">
-         </view>
-      </perspectiveExtension>
-   </extension>
-   <extension
          id="MigrationTutorial"
          point="org.eclipse.core.runtime.products">
       <product
