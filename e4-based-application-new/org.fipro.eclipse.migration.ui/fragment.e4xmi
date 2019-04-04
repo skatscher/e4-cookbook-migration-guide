@@ -27,7 +27,7 @@
           </children>
         </children>
         <children xsi:type="basic:PartSashContainer" xmi:id="_YWiEAFcVEemIPNdqcal8bg" elementId="org.fipro.eclipse.migration.ui.partsashcontainer.2">
-          <children xsi:type="basic:PartStack" xmi:id="_Y7LpMFcVEemIPNdqcal8bg" elementId="org.eclipse.ui.editorss">
+          <children xsi:type="basic:PartStack" xmi:id="_Y7LpMFcVEemIPNdqcal8bg" elementId="org.fipro.eclipse.migration.ui.partstack.editor">
             <tags>NoAutoCollapse</tags>
           </children>
         </children>

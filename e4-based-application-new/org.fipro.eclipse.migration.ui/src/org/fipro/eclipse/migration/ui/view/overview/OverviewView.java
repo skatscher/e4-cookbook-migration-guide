@@ -9,6 +9,12 @@ import javax.inject.Inject;
 import org.eclipse.core.databinding.observable.IObservable;
 import org.eclipse.core.databinding.observable.list.WritableList;
 import org.eclipse.e4.ui.di.Focus;
+import org.eclipse.e4.ui.model.application.MApplication;
+import org.eclipse.e4.ui.model.application.ui.basic.MPart;
+import org.eclipse.e4.ui.model.application.ui.basic.MPartStack;
+import org.eclipse.e4.ui.workbench.modeling.EModelService;
+import org.eclipse.e4.ui.workbench.modeling.EPartService;
+import org.eclipse.e4.ui.workbench.modeling.EPartService.PartState;
 import org.eclipse.e4.ui.workbench.modeling.ESelectionService;
 import org.eclipse.jface.databinding.viewers.ObservableListContentProvider;
 import org.eclipse.jface.layout.GridDataFactory;
@@ -23,22 +29,25 @@ import org.eclipse.jface.viewers.TableViewerColumn;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.ui.IWorkbenchPage;
-import org.eclipse.ui.PartInitException;
 import org.fipro.eclipse.migration.model.Person;
 import org.fipro.eclipse.migration.service.PersonServiceImpl;
 import org.fipro.eclipse.migration.ui.editor.PersonEditor;
-import org.fipro.eclipse.migration.ui.editor.PersonEditorInput;
 
 public class OverviewView {
 
 	@Inject
 	private ESelectionService selectionService;
 
+	@Inject 
+	private EModelService modelService;
+
+	@Inject
+	private EPartService partService;
+
 	TableViewer viewer;
-	
+
 	@PostConstruct
-	public void createPartControl(Composite parent, final IWorkbenchPage workbenchPage) {
+	public void createPartControl(Composite parent, MApplication app) {
 		parent.setLayout(new GridLayout());
 		
 		IObservable list = new WritableList(PersonServiceImpl.getPersons(10), Person.class);
@@ -103,13 +112,25 @@ public class OverviewView {
 								viewer.refresh();
 							}
 						});
-						PersonEditorInput input = new PersonEditorInput(person);
-				        try {
-				        	workbenchPage.openEditor(input, PersonEditor.ID);
 
-				        } catch (PartInitException e) {
-				        	throw new RuntimeException(e);
-				        }
+						MPart personEditor = modelService.createModelElement(MPart.class);
+						personEditor.setContributionURI(PersonEditor.CONTRIBUTION_URI);
+						personEditor.setIconURI("platform:/plugin/org.fipro.eclipse.migration.ui/icons/editor.gif"); //$NON-NLS-1$
+						personEditor.setElementId(PersonEditor.ID);
+						String label = person.getFirstName() + " " + person.getLastName(); //$NON-NLS-1$
+						personEditor.setLabel(label);
+						personEditor.setTooltip(label + " editor"); //$NON-NLS-1$
+						personEditor.setCloseable(true);
+						personEditor.getTags().add("Editor"); //$NON-NLS-1$
+						
+						// set the person as transient data
+						personEditor.getTransientData().put(PersonEditor.PERSON_INPUT_DATA, person);
+						
+						// find the editor partstack, which is defined in the perspective contribution in the fragment.e4xmi
+						MPartStack stack = (MPartStack) modelService.find("org.fipro.eclipse.migration.ui.partstack.editor", app); //$NON-NLS-1$
+						stack.getChildren().add(personEditor);
+						
+						partService.showPart(personEditor, PartState.ACTIVATE);
 					}
 				}
 			}

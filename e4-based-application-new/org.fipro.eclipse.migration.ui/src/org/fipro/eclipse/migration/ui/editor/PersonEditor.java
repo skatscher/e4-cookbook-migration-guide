@@ -2,11 +2,18 @@ package org.fipro.eclipse.migration.ui.editor;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.Map;
+
+import javax.annotation.PostConstruct;
+import javax.inject.Inject;
 
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.beans.BeanProperties;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
-import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.e4.ui.di.Focus;
+import org.eclipse.e4.ui.di.Persist;
+import org.eclipse.e4.ui.model.application.ui.MDirtyable;
+import org.eclipse.e4.ui.model.application.ui.basic.MPart;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.jface.databinding.viewers.ViewersObservables;
 import org.eclipse.jface.layout.GridDataFactory;
@@ -19,38 +26,37 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
-import org.eclipse.ui.IEditorInput;
-import org.eclipse.ui.IEditorPart;
-import org.eclipse.ui.IEditorSite;
-import org.eclipse.ui.PartInitException;
-import org.eclipse.ui.part.EditorPart;
 import org.fipro.eclipse.migration.model.Person;
 import org.fipro.eclipse.migration.model.Person.Gender;
 
+public class PersonEditor {
 
-public class PersonEditor extends EditorPart {
+	public static final String ID = "org.fipro.eclipse.migration.ui.editor.personeditor"; //$NON-NLS-1$
 
-	public static final String ID = "org.fipro.eclipse.migration.ui.editor.personeditor";
-	
+	public static final String CONTRIBUTION_URI = "bundleclass://org.fipro.eclipse.migration.ui/org.fipro.eclipse.migration.ui.editor.PersonEditor"; //$NON-NLS-1$
+	public static final String PERSON_INPUT_DATA = "personInputData"; //$NON-NLS-1$
+
 	Person person;
 	Person activePerson;
-	
-	boolean dirty = false;
-	
-	@Override
-	public void init(IEditorSite site, IEditorInput input) throws PartInitException {
-		if (!(input instanceof PersonEditorInput)) {
-			throw new RuntimeException("Wrong input");
+
+	@Inject
+	MDirtyable dirtyable;
+
+	@Inject
+	public void init(MPart part) {
+		Map<String, Object> transientData = part.getTransientData();
+
+		// note that we are using transient data here, because the editor is not persisted anyway. 
+		// In order to persist the editor between sessions using part.getPersistedState(); is necessary
+		if (!(transientData.get(PERSON_INPUT_DATA) instanceof Person)) {
+			throw new RuntimeException("You forgot to pass the actual person as transient data input"); //$NON-NLS-1$
 		}
-		
-		this.person = ((PersonEditorInput) input).person;
+
+		this.person = (Person) part.getTransientData().get(PERSON_INPUT_DATA);
 		this.activePerson = new Person(this.person);
-	    setSite(site);
-	    setInput(input);
-	    setPartName(input.getName());
 	}
-	
-	@Override
+
+	@PostConstruct
 	public void createPartControl(Composite parent) {
 		parent.setLayout(new GridLayout(2, false));
 		
@@ -91,67 +97,40 @@ public class PersonEditor extends EditorPart {
 		
 		// add bindings
 		DataBindingContext ctx = new DataBindingContext();
-		IObservableValue fnTarget = 
-				WidgetProperties.text(SWT.Modify).observe(firstNameField);
-		IObservableValue lnTarget = 
-				WidgetProperties.text(SWT.Modify).observe(lastNameField);
-		IObservableValue mTarget = 
-				WidgetProperties.selection().observe(marriedButton);
-		IObservableValue gTarget = 
-				ViewersObservables.observeSingleSelection(genderCombo);
+		IObservableValue fnTarget = WidgetProperties.text(SWT.Modify).observe(firstNameField);
+		IObservableValue lnTarget = WidgetProperties.text(SWT.Modify).observe(lastNameField);
+		IObservableValue mTarget = WidgetProperties.selection().observe(marriedButton);
+		IObservableValue gTarget = ViewersObservables.observeSingleSelection(genderCombo);
 		
-		IObservableValue fnModel= BeanProperties.
-				value(Person.class,"firstName").observe(activePerson);
-		IObservableValue lnModel= BeanProperties.
-				value(Person.class,"lastName").observe(activePerson);
-		IObservableValue mModel= BeanProperties.
-				value(Person.class,"married").observe(activePerson);
-		IObservableValue gModel= BeanProperties.
-				value(Person.class,"gender").observe(activePerson);
+		IObservableValue fnModel= BeanProperties.value(Person.class,"firstName").observe(activePerson);
+		IObservableValue lnModel= BeanProperties.value(Person.class,"lastName").observe(activePerson);
+		IObservableValue mModel= BeanProperties.value(Person.class,"married").observe(activePerson);
+		IObservableValue gModel= BeanProperties.value(Person.class,"gender").observe(activePerson);
 		
-		ctx.bindValue(fnTarget, fnModel); 
-		ctx.bindValue(lnTarget, lnModel); 
+		ctx.bindValue(fnTarget, fnModel);
+		ctx.bindValue(lnTarget, lnModel);
 		ctx.bindValue(mTarget, mModel);
 		ctx.bindValue(gTarget, gModel);
 		
 		this.activePerson.addPropertyChangeListener(new PropertyChangeListener() {
-			
 			@Override
 			public void propertyChange(PropertyChangeEvent evt) {
-				dirty = true;
-				firePropertyChange(IEditorPart.PROP_DIRTY);
+				dirtyable.setDirty(true);
 			}
 		});
 	}
-	
-	@Override
-	public void doSave(IProgressMonitor monitor) {
+
+	@Persist
+	public void doSave() {
 		this.person.setFirstName(this.activePerson.getFirstName());
 		this.person.setLastName(this.activePerson.getLastName());
 		this.person.setMarried(this.activePerson.isMarried());
 		this.person.setGender(this.activePerson.getGender());
 		
-		// TODO update table
-		
-		this.dirty = false;
-		firePropertyChange(IEditorPart.PROP_DIRTY);
+		dirtyable.setDirty(false);
 	}
 
-	@Override
-	public void doSaveAs() {
-	}
-
-	@Override
-	public boolean isDirty() {
-		return this.dirty;
-	}
-
-	@Override
-	public boolean isSaveAsAllowed() {
-		return false;
-	}
-
-	@Override
+	@Focus
 	public void setFocus() {
 	}
 
