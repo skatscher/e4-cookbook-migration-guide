@@ -4,5 +4,7 @@ Bundle-Name: Migration Application Services
 Bundle-SymbolicName: org.fipro.eclipse.migration.service
 Bundle-Version: 1.0.0.qualifier
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-ActivationPolicy: lazy
 Require-Bundle: org.fipro.eclipse.migration.model;bundle-version="1.0.0"
 Export-Package: org.fipro.eclipse.migration.service
+Service-Component: OSGI-INF/person_service.xml

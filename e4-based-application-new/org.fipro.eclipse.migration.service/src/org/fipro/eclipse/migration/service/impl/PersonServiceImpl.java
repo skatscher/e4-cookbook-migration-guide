@@ -1,4 +1,4 @@
-package org.fipro.eclipse.migration.service;
+package org.fipro.eclipse.migration.service.impl;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -7,12 +7,13 @@ import java.util.List;
 import java.util.Random;
 
 import org.fipro.eclipse.migration.model.Person;
+import org.fipro.eclipse.migration.service.PersonService;
  
 /**
  * Class that acts as service for accessing numerous {@link Person}s.
  * The values are randomly put together out of names and places from "The Simpsons"
  */
-public class PersonServiceImpl {
+public class PersonServiceImpl implements PersonService {
  
 	public static String[] maleNames = {
 		"Bart", 
@@ -43,7 +44,8 @@ public class PersonServiceImpl {
 	 * @param numberOfPersons The number of {@link Person}s that should be generated.
 	 * @return
 	 */
-	public static List<Person> getPersons(int numberOfPersons) {
+	@Override
+	public List<Person> getPersons(int numberOfPersons) {
 		List<Person> result = new ArrayList<Person>();
 		
 		for (int i = 0; i < numberOfPersons; i++) {
@@ -52,13 +54,14 @@ public class PersonServiceImpl {
 		
 		return result;
 	}
-	
+
 	/**
 	 * Creates a random person out of names which are taken from "The Simpsons" 
 	 * and enrich them with random generated married state and birthday date.
 	 * @return
 	 */
-	public static Person createPerson(int id) {
+	@Override
+	public Person createPerson(int id) {
 		Random randomGenerator = new Random();
 		
 		Person result = new Person(id);
@@ -93,5 +96,5 @@ public class PersonServiceImpl {
 		
 		return result;
 	}
-	
+
 }

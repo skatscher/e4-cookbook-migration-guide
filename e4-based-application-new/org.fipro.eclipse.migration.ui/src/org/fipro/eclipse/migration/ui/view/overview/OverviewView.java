@@ -30,7 +30,7 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.fipro.eclipse.migration.model.Person;
-import org.fipro.eclipse.migration.service.PersonServiceImpl;
+import org.fipro.eclipse.migration.service.PersonService;
 import org.fipro.eclipse.migration.ui.editor.PersonEditor;
 
 public class OverviewView {
@@ -44,13 +44,16 @@ public class OverviewView {
 	@Inject
 	private EPartService partService;
 
+	@Inject
+	private PersonService personService;
+
 	TableViewer viewer;
 
 	@PostConstruct
 	public void createPartControl(Composite parent, MApplication app) {
 		parent.setLayout(new GridLayout());
-		
-		IObservable list = new WritableList(PersonServiceImpl.getPersons(10), Person.class);
+
+		IObservable list = new WritableList(personService.getPersons(10), Person.class);
 
 		viewer = new TableViewer(parent, SWT.MULTI|SWT.BORDER|SWT.H_SCROLL|SWT.V_SCROLL|SWT.FULL_SELECTION);
 		ObservableListContentProvider cp = new ObservableListContentProvider();
