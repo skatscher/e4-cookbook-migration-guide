@@ -27,14 +27,6 @@
       </product>
    </extension>
    <extension
-         point="org.eclipse.ui.preferencePages">
-      <page
-            class="org.fipro.eclipse.migration.ui.preferences.DescriptionPreferencePage"
-            id="org.fipro.eclipse.migration.ui.page1"
-            name="Description">
-      </page>
-   </extension>
-   <extension
          id="org.fipro.eclipse.migration.ui.fragment"
          point="org.eclipse.e4.workbench.model">
       <fragment

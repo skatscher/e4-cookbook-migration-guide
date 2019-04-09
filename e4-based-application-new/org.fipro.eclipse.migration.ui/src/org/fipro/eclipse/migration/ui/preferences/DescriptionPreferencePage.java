@@ -9,18 +9,20 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
-import org.eclipse.ui.IWorkbench;
-import org.eclipse.ui.IWorkbenchPreferencePage;
-import org.fipro.eclipse.migration.ui.Activator;
 
-public class DescriptionPreferencePage extends PreferencePage implements IWorkbenchPreferencePage {
+public class DescriptionPreferencePage extends PreferencePage {
 
 	// Names for preferences
-	private static final String DESCRIPTION_COLOR = "description_color";
+	private static final String DESCRIPTION_COLOR = "description_color"; //$NON-NLS-1$
 
 	// The checkboxes
 	private Button checkBoxBlack;
 	private Button checkBoxBlue;
+
+	public DescriptionPreferencePage() {
+		super("Description");
+		setDescription("The preferences page for the Description view");
+	}
 
 	/**
 	 * Creates the controls for this page
@@ -100,14 +102,6 @@ public class DescriptionPreferencePage extends PreferencePage implements IWorkbe
 
 		// Return true to allow dialog to close
 		return true;
-	}
-
-	@Override
-	public void init(IWorkbench workbench) {
-		setPreferenceStore(Activator.getDefault().getPreferenceStore());
-		
-		setTitle("Description");
-		setDescription("The preferences page for the Description view");
 	}
 
 }
